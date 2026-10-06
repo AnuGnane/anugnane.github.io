@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GB Car-Insurance Risk Map — Anu Gnane</title>
+  <meta name="description" content="An expected annual motor-insurance premium for every small area in Great Britain, built from open data and calibrated against published price indices.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="prose">
+    <p class="crumb"><a href="../">Anu Gnane</a></p>
+    <h1>GB Car-Insurance Risk Map</h1>
+    <p class="lede">An expected annual motor-insurance premium for every small area in Great Britain — 41,729 LSOAs (England and Wales) and Data Zones (Scotland) — built entirely from open data and calibrated against published price indices.</p>
+    <p class="links"><a href="https://anugnane.github.io/london-insurance-risk/">Live map</a><a href="https://github.com/AnuGnane/london-insurance-risk">Repo</a></p>
+
+    <h2>The question</h2>
+    <p>Why does the same driver pay £2,000 in one postcode and £700 in another? Insurers price location aggressively but publish nothing about how. The model works out the territorial effect from the outside: it takes the open data an insurer's territory model plausibly summarises — vehicle crime, area deprivation, traffic intensity, who lives there — and regresses it against the only public ground truth, published premium indices.</p>
+    <p>It is a territorial risk proxy, not a quote engine: it uses no individual driver or vehicle details.</p>
+
+    <h2>The data</h2>
+    <p>Ten open sources, all under the Open Government Licence, put onto one geography: the 2011 census small areas that the deprivation indices, boundaries and Scottish Data Zones all share.</p>
+    <ul>
+      <li><strong>Crime:</strong> street-level vehicle crime from data.police.uk for England and Wales; Recorded Crime in Scotland through a SPARQL endpoint.</li>
+      <li><strong>Deprivation:</strong> the English, Welsh and Scottish indices, ranked within each nation.</li>
+      <li><strong>Traffic:</strong> about 22,000 DfT count points, as the mean daily flow within 2 km of each area.</li>
+      <li><strong>Who lives there:</strong> Census 2021 (England and Wales) and 2022 (Scotland) for the young-driver share and cars per household.</li>
+      <li><strong>Diagnostics on the map, not in the price:</strong> road collisions, flood extents and local-authority traffic.</li>
+      <li><strong>The anchor:</strong> a 137-row panel hand-transcribed from the WTW/Confused.com quarterly price index and MoneySuperMarket's regional figures, under a strict no-invented-figures rule — every £ figure traces to a published, cited source.</li>
+    </ul>
+
+    <h2>The model</h2>
+    <p>Ordinary least squares on the log of each area's premium relative to the national average, with area-clustered standard errors. Modelling the ratio strips out the national price level and its drift over time, leaving the effect of place; absolute pounds come back at the end by pinning to the latest published national average.</p>
+    <p>It is deliberately small, because the calibration sample honestly is: 106 matched observations across 30 areas. Every feature enters as a rank percentile within comparable groups, so no outlier can blow up its own prediction and three nations' different scales line up.</p>
+    <ul>
+      <li><strong>An evidence gate.</strong> A feature gets in only with an independent partial correlation at acceptable collinearity, or by winning a leave-one-area-out head-to-head. It has said no more often than yes: population density, flood risk and road casualties were all gated out.</li>
+      <li><strong>Place and composition.</strong> Each area gets three numbers: the full premium, a place-only counterfactual with demographics held at the national median, and the uplift between them. Composition alone explains more of the spread than place alone, and that is reported as a finding.</li>
+      <li><strong>Explainable to the pound.</strong> Each premium decomposes into an exact £ step per factor from a median baseline, summing to the headline figure with no residual.</li>
+      <li><strong>Honest intervals.</strong> A cluster bootstrap, widened by the out-of-sample error, gives every area a low and high premium.</li>
+    </ul>
+    <p>From the July 2026 calibration: a panel R² of 0.930, a leave-one-area-out error of £76.51, a temporal back-test error of £69.76, and a modelled premium span of £186 to £1,578 across Great Britain.</p>
+
+    <h2>The live map</h2>
+    <p>A static React and MapLibre map on GitHub Pages: search any GB postcode, see the area's premium and its per-factor breakdown. There is no server in production.</p>
+    <p><a href="https://anugnane.github.io/london-insurance-risk/">Open the live map</a></p>
+
+    <h2>What was hard</h2>
+    <ul>
+      <li><strong>Open data that wasn't a download.</strong> England's flood extents had to be requested from Defra by email and arrived over credentialed SFTP; a Welsh ArcGIS organisation was decommissioned mid-project; SEPA's API intermittently rejects complex geometries, so the ingest retries feature by feature.</li>
+      <li><strong>Three nations, three scales.</strong> Crime recording differs between England and Wales and Scotland, Scottish crime arrives at council grain, and Wales has no pure crime domain in its deprivation index.</li>
+      <li><strong>Geometry that breaks itself.</strong> Re-simplifying after repairing polygons once re-broke two Scottish areas, so the repair is always the last geometry step.</li>
+      <li><strong>Proxies that looked right.</strong> Local-authority traffic per resident turned out to be an inverse-density proxy, and population density was always collinear; point-level traffic flow replaced both.</li>
+      <li><strong>Stale premiums.</strong> Running the risk stage without recalibrating can ship stale premiums, and it has bitten before; the calibrate step now re-runs it, and a serve-consistency test guards the map against stale coefficients.</li>
+    </ul>
+
+    <h2>What it doesn't claim</h2>
+    <ul>
+      <li>It validates at postcode-area and region grain and predicts at small-area grain, so per-area figures are directionally strong rankings, not quotes.</li>
+      <li>Area aggregates predict area premiums; nothing here supports conclusions about individuals.</li>
+      <li>Wealthy-but-central areas can under-price, and Northern Ireland is excluded for want of open crime data.</li>
+    </ul>
+
+    <footer>
+      <p>From the project's README and its one-page summary. Contains public sector information licensed under the Open Government Licence v3.0.</p>
+    </footer>
+  </main>
+</body>
+</html>
