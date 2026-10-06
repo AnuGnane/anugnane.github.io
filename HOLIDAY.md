@@ -28,7 +28,7 @@ This is the queue for `AnuGnane/anugnane.github.io`, Anu's portfolio, served by 
 
 ## Queue
 
-- [ ] **S-1 The site.** `index.html` with a short list of projects (name, one line, status: live / in development / App Store pending, a link where one exists), `projects/` ready for a page per project, `styles.css`, `.nojekyll`, `scripts/check.mjs`, and `README.md` saying how to add a project. Rulings: the accent colour (default: a deep teal), whether the list is cards or a plain list (default: plain list with a rule between rows).
+- [x] **S-1 The site.** `index.html` with a short list of projects (name, one line, status: live / in development / App Store pending, a link where one exists), `projects/` ready for a page per project, `styles.css`, `.nojekyll`, `scripts/check.mjs`, and `README.md` saying how to add a project. Rulings: the accent colour (default: a deep teal), whether the list is cards or a plain list (default: plain list with a rule between rows).
 - [ ] **S-2 london-insurance-risk.** A case study page from its README and `docs/PROJECT_SUMMARY.html`: the question, the data, the model, the live map (https://anugnane.github.io/london-insurance-risk/), what was hard. Link the repo.
 - [ ] **S-3 Wizard Shootout.** From its README and ROADMAP: what it is, the classes, local and online play, the live game (https://anugnane.github.io/wizard-shootout/). Link the repo.
 - [ ] **S-4 gaffer.** From `README.md` and `docs/GUIDE.md` in the FPL repo: an advisor-only Fantasy Premier League tool, component models and a MILP planner, the honesty rails, what it never does (log in, make transfers). Link the repo. Mention no key, no config, no data path.
