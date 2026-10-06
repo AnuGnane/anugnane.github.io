@@ -1,0 +1,66 @@
+/* One accent, a system font stack, light and dark through prefers-color-scheme. */
+:root {
+  --bg: #ffffff;
+  --fg: #1b1f22;
+  --muted: #5a6369;
+  --rule: #d9dee1;
+  --accent: #0b6e69;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121516;
+    --fg: #e6eaec;
+    --muted: #9aa5ab;
+    --rule: #2c3336;
+    --accent: #4fc1b9;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem;
+}
+
+h1 { font-size: 1.75rem; line-height: 1.2; margin: 0 0 0.25rem; }
+h2 { font-size: 1.125rem; margin: 2.5rem 0 0.5rem; }
+
+a { color: var(--accent); text-underline-offset: 0.15em; }
+a:hover, a:focus-visible { text-decoration-thickness: 2px; }
+
+.handle { margin: 0; color: var(--muted); }
+
+.projects { list-style: none; margin: 0; padding: 0; }
+.projects li { padding: 1rem 0; border-top: 1px solid var(--rule); }
+.projects li:last-child { border-bottom: 1px solid var(--rule); }
+.projects h3 { font-size: 1.0625rem; margin: 0; }
+.projects p { margin: 0.25rem 0 0; }
+
+.status {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.links { font-size: 0.9375rem; }
+.links a + a { margin-left: 1rem; }
+
+footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
