@@ -64,3 +64,11 @@ a:hover, a:focus-visible { text-decoration-thickness: 2px; }
 .links a + a { margin-left: 1rem; }
 
 footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
+
+/* S-2: the plain pages (Shiftie, 404) get a way home and room for prose. */
+.crumb { margin: 0 0 1.5rem; font-size: 0.9375rem; }
+.lede { font-size: 1.125rem; }
+.prose h2 { margin-top: 2rem; }
+.prose ul { padding-left: 1.25rem; }
+.prose li + li { margin-top: 0.25rem; }
+.muted { color: var(--muted); }

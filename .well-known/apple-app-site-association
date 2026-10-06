@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["T2VJ6G7R9P.AG.ShiftGame"],
+        "components": [
+          { "/": "/challenge/*", "comment": "Challenge deep links: /challenge/code/<code> and /challenge/daily/<yyyymmdd>/<size>" }
+        ]
+      }
+    ]
+  }
+}
