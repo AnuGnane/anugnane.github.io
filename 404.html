@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Not found</title>
+  <!--
+    S-2. GitHub Pages serves this page for every unmatched path, so it is also
+    the landing page for Shiftie's /challenge/* Universal Links on a device
+    without the app (shift-game web/404.html). Links are root-absolute because
+    the page is served at any depth.
+  -->
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main>
+    <div id="missing">
+      <h1>Not found</h1>
+      <p>There is no page at this address.</p>
+      <p><a href="/">Go to the home page</a></p>
+    </div>
+
+    <div id="challenge" hidden>
+      <p class="handle">A friend challenged you</p>
+      <h1>Shiftie</h1>
+      <p class="lede">Slide. Wrap. Spell.</p>
+      <p>Someone sent you a Shiftie puzzle — a sliding word game where rows and columns wrap around. Get the app to take them on.</p>
+      <p><strong>Coming soon to the App Store.</strong> Free, for iPhone.</p>
+      <p class="links"><a href="/shiftie/">Get Shiftie</a><a id="open" href="/shiftie/" hidden>Open in Shiftie</a></p>
+    </div>
+  </main>
+
+  <script>
+    // A /challenge/ path shows the Shiftie copy instead of the not-found line.
+    // For a challenge link opened in Safari although Shiftie is installed, the
+    // shift:// retry comes from shift-game web/404.html unchanged.
+    (function () {
+      if (location.pathname.indexOf("/challenge/") !== 0) return;
+      document.title = "Shiftie — You've been challenged";
+      document.getElementById("missing").hidden = true;
+      document.getElementById("challenge").hidden = false;
+      var m = location.pathname.match(/^\/challenge\/(code\/([^/]+)|daily\/(\d{8})\/(\d+))/);
+      if (!m) return;
+      var moves = new URLSearchParams(location.search).get("moves");
+      var target = m[2]
+        ? "shift://challenge?code=" + encodeURIComponent(m[2])
+        : "shift://challenge?seed=" + m[3] + "&size=" + m[4] + "&kind=daily" +
+          (moves ? "&moves=" + encodeURIComponent(moves) : "");
+      var open = document.getElementById("open");
+      open.href = target;
+      open.hidden = false;
+    })();
+  </script>
+</body>
+</html>
