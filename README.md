@@ -2,7 +2,7 @@
 
 Anu Gnane's portfolio. Plain HTML and CSS served by GitHub Pages from the root of `main`. No build step, no framework, no dependencies; `.nojekyll` tells Pages to serve the files as they are.
 
-While Anu is away (October 2026) the site is built by scheduled cloud agents working `HOLIDAY.md` one package a run, each as a PR for Anu to approve. See `AnuGnane/autopilot` for the playbook.
+While Anu is away (October 2026) the site is built by scheduled cloud agents working `HOLIDAY.md` one package a run, each as a PR the run itself merges once its gate and review pass (from 6 October 14:00). See `AnuGnane/autopilot` for the playbook.
 
 ## Layout
 
