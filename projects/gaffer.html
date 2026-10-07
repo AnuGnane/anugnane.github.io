@@ -42,7 +42,7 @@
     <h2>The honesty rails</h2>
     <p>Honesty over polish is the first of the project's design principles. A number the tool cannot back up is not shown: missing data reads as a dash, never as zero; an empty state says why it is empty; a probability carries its sample size or its error bar where one exists. Every layer degrades gracefully and says so, rather than blocking or guessing.</p>
     <ul>
-      <li><strong>Degradation rails.</strong> A large share of the Python test suite pins the honesty rules and the counts a later change must not move silently. A rail that fails names the rule the edit crossed, and the rule is never to edit a rail to make it pass.</li>
+      <li><strong>Degradation rails.</strong> A large share of the Python test suite pins the honesty rules and the counts a later change must not move silently. A rail that fails tells you which rule the edit crossed, and its message names the file that owns it; the rule is never to edit a rail to make it pass.</li>
       <li><strong>A golden board.</strong> One recorded gameweek is replayed through the whole weekly solve and compared byte for byte with committed files, so a refactor that says "no diff" has shown something.</li>
       <li><strong>Gates before shipping.</strong> Every feature faces a pre-registered bar on held-out data or a season replay, with season claims made over several seeds and the spread quoted. Features that failed were withdrawn and recorded, not shipped hopefully.</li>
       <li><strong>A decision ledger</strong> grades the tool, not just the model — transfers, captaincy, bench and chips — with the rule that a week you agreed with the model is evidence of nothing.</li>
