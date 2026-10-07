@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gaffer — Anu Gnane</title>
+  <meta name="description" content="An advisor-only Fantasy Premier League tool: machine-learned component models predict every player's points, and a mixed-integer optimizer plans the transfers. It never logs into FPL and never makes a transfer.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="prose">
+    <p class="crumb"><a href="../">Anu Gnane</a></p>
+    <h1>gaffer</h1>
+    <p class="lede">An advisor-only Fantasy Premier League tool. Every week it downloads the public FPL data, predicts every player's points with a set of machine-learned models, plans your transfers several gameweeks ahead with a mathematical optimizer, and tells you what to do — in the terminal, in an HTML report and in a local web app.</p>
+    <p class="links"><a href="https://github.com/AnuGnane/FPL">Repo</a></p>
+
+    <h2>What it never does</h2>
+    <p><strong>It never logs into FPL and it never makes a transfer.</strong> It reads public FPL endpoints only. You apply its advice yourself, in the official app.</p>
+
+    <h2>The models</h2>
+    <p>Points are predicted by parts rather than in one go. Six LightGBM component models each predict one piece of a player's score, and the pieces are assembled into expected points with FPL's own scoring table:</p>
+    <ul>
+      <li><strong>Minutes</strong> — did not play, came off the bench, or started: the chance of playing and of a 60-minute appearance.</li>
+      <li><strong>Attacking</strong> — goal and assist rates, blended with Understat xG history.</li>
+      <li><strong>Team</strong> — a Dixon-Coles goals model per fixture for clean sheets and goals conceded, optionally blended with bookmaker odds at a fitted weight.</li>
+      <li><strong>Defcon</strong> — the chance a player clears the defensive-contribution threshold.</li>
+      <li><strong>Saves</strong> and <strong>Bonus</strong> — goalkeeper save points, and bonus through the BPS system.</li>
+    </ul>
+    <p>A final calibration layer corrects the level bias in the assembled numbers. Every number carries its uncertainty too: a range of what a player might actually score, from football's own variance plus the model's error. The bands are wide, and the project treats that width as the finding, not a bug. Penalties and set pieces are priced explicitly, from who actually took each penalty.</p>
+    <p>Then an injury and news pass adjusts each player's chance of playing, from injury tables, two predicted-line-up sources and the official flag. Applied last is your own pin, because you watched the press conference and the model did not.</p>
+
+    <h2>The planner</h2>
+    <p>The squad is planned by a multi-period mixed-integer program (PuLP for the modelling, HiGHS to solve, CBC as the fallback): transfers, captain, vice, bench order and chips together, over a receding horizon. It plans several weeks ahead, you play only the first, and next week it plans again.</p>
+    <ul>
+      <li><strong>Transfers priced across the horizon.</strong> A dynamic program values holding a free transfer, so taking a points hit now competes fairly with banking the transfer.</li>
+      <li><strong>Chip timing as optimal stopping.</strong> A chip plays when this week's gain clears the bar of what waiting could still buy. On a replayed season it was the biggest measured win in the project's history.</li>
+      <li><strong>A scenario sweep.</strong> The board is re-solved many times under calibrated noise, and a move that wins in only a handful of those solves is dropped as noise-chasing.</li>
+      <li><strong>Restraint.</strong> A transfer ladder prices every level of appetite, from banking up to three hits, on one shared set of simulated outcomes. The advice steps up a rung only when the higher one wins often enough, and says which step it refused and why.</li>
+      <li><strong>A league tilt.</strong> With a mini-league set, the planner leans towards differentials when you are chasing and towards covering rivals when you are defending. Reported expected points stay the raw model numbers.</li>
+    </ul>
+
+    <h2>The honesty rails</h2>
+    <p>Honesty over polish is the first of the project's design principles. A number the tool cannot back up is not shown: missing data reads as a dash, never as zero; an empty state says why it is empty; a probability carries its sample size or its error bar where one exists. Every layer degrades gracefully and says so, rather than blocking or guessing.</p>
+    <ul>
+      <li><strong>Degradation rails.</strong> A large share of the Python test suite pins the honesty rules and the counts a later change must not move silently. A rail that fails tells you which rule the edit crossed, and its message names the file that owns it; the rule is never to edit a rail to make it pass.</li>
+      <li><strong>A golden board.</strong> One recorded gameweek is replayed through the whole weekly solve and compared byte for byte with committed files, so a refactor that says "no diff" has shown something.</li>
+      <li><strong>Gates before shipping.</strong> Every feature faces a pre-registered bar on held-out data or a season replay, with season claims made over several seeds and the spread quoted. Features that failed were withdrawn and recorded, not shipped hopefully.</li>
+      <li><strong>A decision ledger</strong> grades the tool, not just the model — transfers, captaincy, bench and chips — with the rule that a week you agreed with the model is evidence of nothing.</li>
+      <li><strong>A checked brief.</strong> The week's advice is also written up as prose by a language model, and checked mechanically so every number and every name in it is in the facts it was given.</li>
+    </ul>
+
+    <h2>The web app</h2>
+    <p>The same advice is served as a local web app in six hubs — This Week, Planning, Players, League, Live and Model — reading the same files the command line writes, so the terminal, the report and the app can never disagree. It is drawn in one design language: hairline rules rather than cards, tabular figures, and colour spent only where it means something. Pages render in dark and light, and at phone width.</p>
+
+    <footer>
+      <p>From the project's README and guide.</p>
+    </footer>
+  </main>
+</body>
+</html>
