@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shunt — Anu Gnane</title>
+  <meta name="description" content="A turn-based block sliding puzzle for iPhone: drag blocks out through gates of their own colour, and every move advances the board one tick.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="prose">
+    <p class="crumb"><a href="../">Anu Gnane</a></p>
+    <h1>Shunt</h1>
+    <p class="lede">A native iPhone block sliding puzzle in the Color Block Jam and Block Out family, with one twist: the board is turn based. Drag polyomino blocks out through gates of their own colour, and every move you make advances the board one tick. No lives, no ads, no purchases. Built for one person first, the App Store second.</p>
+    <p class="muted">In development. The repo is private.</p>
+
+    <h2>The loop</h2>
+    <p>Blocks are polyominoes of one to five cells in up to seven colours, and they keep their shape. One drag moves one block along any path of free cells, any distance; it cannot squeeze through a gap narrower than itself or cut a corner. A block leaves when it slides off the board through the gate of its colour, and that gate has to be wide enough for the side the block presents. A level is done when every block is out.</p>
+    <p>Journey is scored by moves against par, never by time. Par is the solver's optimum for the level: three stars at or under par, two within three over, one for any solve. An elapsed clock is shown alongside and can be switched off; it never affects par, stars or progress. The arcade itch goes to Rush, a separate mode with sixty seconds on the clock.</p>
+
+    <h2>The tick</h2>
+    <p>After every move, exits included, the board ticks once, and its living parts act in a fixed order: conveyors shift, lifts step, spawners push out a new block, shutters open and close, then recolour tiles paint. The board moves only when you do, so it can be as alive as Block Out's without a timer. A strip under the board says in words what the next tick will do, and says as soon as it can prove there is no way through from here.</p>
+    <p>After the basic gates and shapes, new elements arrive roughly two a chapter, twelve more in all: gate width, walls, arrow blocks that move on one axis, conveyors, layered blocks that peel a colour per exit, frozen blocks, lifts, spawners, lock gates, recolour tiles, shutter gates and chained blocks.</p>
+
+    <h2>The ink tray</h2>
+    <p>The board is drawn as one object lit from one light, top and slightly left: every piece shows its thickness as a hard copy of its outline offset straight down in a darker tone, and catches the light along every edge that faces up. Nothing is blurred but the shadow of the block you are holding. Cards and tiles elsewhere in the app stand on the same lip. Glass is kept for the chrome that floats over the board; the board and the cards stay solid.</p>
+    <p>Every colour also carries a shape mark, on blocks and on gates, so the game is playable in greyscale.</p>
+
+    <h2>The generator</h2>
+    <p>Levels are not placed at random and filtered. The generator, <code>shunt-gen</code>, unbuilds a solved board: it draws the order the blocks will leave in, then puts them back one at a time, last first, at the edge under their gate and walked inward to a resting place, with setup moves and deliberate obstructions mixed in. Every candidate is solvable by construction, so the solver's job is to find the true par, not to reject boards.</p>
+    <p>Par comes from an A* search whose heuristic is the number of blocks still on the board. On the first chapter that took the solve from 194,000 states and fifty seconds to 634 states and a fraction of a second. Recipes ramp each chapter in bands, each denser than the last, and a level that measures badly is thrown away, never patched.</p>
+
+    <h2>Two engines</h2>
+    <p>The rules exist twice: a Python reference that is the rulebook, and the Swift engine the app plays. Every rule change lands in Python first, with a level that exercises it, then in Swift. Python replays every stored solution and re-solves a sample to confirm the pars agree, and anything the two disagree on fails the pipeline. Off the solved paths too, seeded random play is written out by the Python rulebook, every legal move set and state along the way, and the Swift engine replays it step for step.</p>
+
+    <footer>
+      <p>From the project's spec, design and generator notes.</p>
+    </footer>
+  </main>
+</body>
+</html>
