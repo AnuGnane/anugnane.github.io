@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wizard Shootout — Anu Gnane</title>
+  <meta name="description" content="A top-down arena duel inspired by Tank Trouble, but with wizards: solo against a bot, local on one keyboard or with controllers, or online with a friend.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="prose">
+    <p class="crumb"><a href="../">Anu Gnane</a></p>
+    <h1>Wizard Shootout</h1>
+    <p class="lede">A top-down arena duel inspired by Tank Trouble — but with wizards. Pick a class, bounce elemental bolts off the walls of a maze that spells reshape, grab orbs for extra power and fire off your signature spell. First wizard to win five rounds takes the match.</p>
+    <p class="links"><a href="https://anugnane.github.io/wizard-shootout/">Play</a><a href="https://github.com/AnuGnane/wizard-shootout">Repo</a></p>
+
+    <figure>
+      <img src="https://anugnane.github.io/wizard-shootout/trailer.gif" width="1024" height="700" loading="lazy" alt="Four bot wizards duel on the Four Chambers map">
+      <figcaption>Recorded from a headless four-bot match on every deploy, so it always shows the live game.</figcaption>
+    </figure>
+
+    <h2>What it is</h2>
+    <p>A browser game with all its art and sound generated in code: pixel-art textures built at boot, a Web Audio synth for the effects and a procedural chiptune loop that ramps up at match point. The repo holds no binary assets, which keeps cosmetics, map themes and new classes nearly free.</p>
+    <ul>
+      <li><strong>A mutable battlefield.</strong> Ice shots frost the floor and make it slippery, fire melts it back, fire on ice bursts into vision-blocking steam, and earth orbs raise temporary walls mid-round. A round that drags past 60 seconds floods the arena with orbs.</li>
+      <li><strong>Ten hand-designed maps</strong>, each with a theme, plus a map editor. Every layout is validated — closed borders, all spawns present, every floor tile reachable — so a broken map fails in CI, and the editor won't save one.</li>
+      <li><strong>Extras:</strong> mutators (giant projectiles, orb rain, low cooldowns, mirror maps), an experimental fog of war, a seeded daily challenge, local stats, achievements and unlockable robes.</li>
+    </ul>
+
+    <h2>The classes</h2>
+    <p>Seven wizards, each with a signature ability on its own key and a passive. Your own element's orb is empowered.</p>
+    <ul>
+      <li><strong>Arcanist</strong> — Blink: teleport through one wall you're facing.</li>
+      <li><strong>Pyromancer</strong> — Flame Burst: an eight-way nova of burning sparks.</li>
+      <li><strong>Cryomancer</strong> — Frost Ring: frost nearby tiles and slow nearby enemies.</li>
+      <li><strong>Stonecaller</strong> — Breach: shatter the wall tile you're facing.</li>
+      <li><strong>Stormcaller</strong> — Zap Dash: a fast dash that stuns anyone touched.</li>
+      <li><strong>Warden</strong> — Reflect Ward: a bubble that reflects enemy projectiles.</li>
+      <li><strong>Trickster</strong> — Scatter Dash: a short dash that fires a triple spread backward.</li>
+    </ul>
+
+    <h2>Local play</h2>
+    <ul>
+      <li><strong>Against a bot</strong> that pathfinds through the maze, grabs orbs, dodges shots, uses its class signature and fires only with a clear line of sight, at three difficulties.</li>
+      <li><strong>Two players</strong> on one keyboard, or a <strong>party</strong> of three or four with gamepads.</li>
+      <li><strong>Survival:</strong> one or two wizards in co-op against endless, escalating waves of dark wizards.</li>
+      <li><strong>On a phone</strong>, the one-player mode gets a floating virtual joystick and thumb-sized buttons. The game installs to the home screen and, after the first load, plays every mode but online with no network.</li>
+    </ul>
+
+    <h2>Online play</h2>
+    <p>Online 1v1, still labelled a prototype, runs over a WebRTC data channel between the two browsers, with no game server: the game is static-hosted. The host runs the authoritative simulation and sends snapshots about 25 times a second; the guest renders what it is told and streams its input back, so there is one authority for every collision and the two arenas can't drift apart.</p>
+    <p>Introducing the two browsers is the only awkward part of a serverless game, so the lobby offers three routes to the same connection: a five-character room code swapped through a public MQTT broker used purely as a mailbox, a QR code drawn by an encoder written in the repo, and a copy-paste code that needs nothing but the two browsers and is always on screen as the fallback. A free public TURN relay lets players behind strict NATs connect; play on the same network never touches it.</p>
+    <p>All of the gameplay is synced: any class, any built-in map, every orb, and every change to the arena on both screens. Custom maps stay local, since the other player doesn't have them, and each screen paints its own cosmetics.</p>
+
+    <h2>Play it</h2>
+    <p><a href="https://anugnane.github.io/wizard-shootout/">Open the game</a> — on a phone, hold it sideways.</p>
+
+    <footer>
+      <p>From the project's README and roadmap.</p>
+    </footer>
+  </main>
+</body>
+</html>

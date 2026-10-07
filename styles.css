@@ -72,3 +72,8 @@ footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
 .prose ul { padding-left: 1.25rem; }
 .prose li + li { margin-top: 0.25rem; }
 .muted { color: var(--muted); }
+
+/* S-4: a figure from the project's own site scales to the phone. */
+figure { margin: 1.5rem 0; }
+figure img { display: block; max-width: 100%; height: auto; border: 1px solid var(--rule); }
+figcaption { margin-top: 0.5rem; color: var(--muted); font-size: 0.875rem; }
