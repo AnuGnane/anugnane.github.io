@@ -48,9 +48,9 @@
     </ul>
 
     <h2>Online play</h2>
-    <p>Online 1v1 runs over a WebRTC data channel between the two browsers, with no game server: the game is static-hosted. The host runs the authoritative simulation and sends snapshots about 25 times a second; the guest renders what it is told and streams its input back, so there is one authority for every collision and the two arenas can't drift apart.</p>
+    <p>Online 1v1, still labelled a prototype, runs over a WebRTC data channel between the two browsers, with no game server: the game is static-hosted. The host runs the authoritative simulation and sends snapshots about 25 times a second; the guest renders what it is told and streams its input back, so there is one authority for every collision and the two arenas can't drift apart.</p>
     <p>Introducing the two browsers is the only awkward part of a serverless game, so the lobby offers three routes to the same connection: a five-character room code swapped through a public MQTT broker used purely as a mailbox, a QR code drawn by an encoder written in the repo, and a copy-paste code that needs nothing but the two browsers and is always on screen as the fallback. A free public TURN relay lets players behind strict NATs connect; play on the same network never touches it.</p>
-    <p>Everything is synced: any class, any built-in map, every orb, and every change to the arena on both screens. Custom maps stay local, since the other player doesn't have them.</p>
+    <p>All of the gameplay is synced: any class, any built-in map, every orb, and every change to the arena on both screens. Custom maps stay local, since the other player doesn't have them, and each screen paints its own cosmetics.</p>
 
     <h2>Play it</h2>
     <p><a href="https://anugnane.github.io/wizard-shootout/">Open the game</a> — on a phone, hold it sideways.</p>
