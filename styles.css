@@ -77,3 +77,8 @@ footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
 figure { margin: 1.5rem 0; }
 figure img { display: block; max-width: 100%; height: auto; border: 1px solid var(--rule); }
 figcaption { margin-top: 0.5rem; color: var(--muted); font-size: 0.875rem; }
+
+/* S-8: the "Also" names sit in a quieter list under the projects. */
+.also { list-style: none; margin: 0; padding: 0; }
+.also li { padding: 0.5rem 0; border-top: 1px solid var(--rule); }
+.also li:last-child { border-bottom: 1px solid var(--rule); }
