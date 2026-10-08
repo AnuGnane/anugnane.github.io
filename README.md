@@ -16,7 +16,9 @@ While Anu is away (October 2026) the site is built by scheduled cloud agents wor
 1. Add a row to the `<ul class="projects">` list in `index.html`: an `<h3>` with the name and a `<span class="status">` (Live, In development or App Store pending), one line from the project's own README, and a `<p class="links">` with any live link and the repo link. Leave the links out where none exists.
 2. For a case study, copy `index.html`'s `<head>` into `projects/<name>.html`, give it its own `<title>`, link the stylesheet as `../styles.css`, and link the page from the row.
 3. Say only what the project's repo says. Screenshots only from the project's own repo or docs; never a placeholder.
-4. Run the check.
+4. Rows go in status order: Live, then App Store pending, then In development.
+5. A project whose repo has no README goes under "Also" (`<ul class="also">`) by name only.
+6. Run the check.
 
 ## Check before you commit
 
