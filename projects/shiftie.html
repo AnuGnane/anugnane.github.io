@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shiftie — Anu Gnane</title>
+  <meta name="description" content="A calm word-grid puzzle for iPhone: slide whole rows and columns, with wraparound, until every target word lines up.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="prose">
+    <p class="crumb"><a href="../">Anu Gnane</a></p>
+    <h1>Shiftie</h1>
+    <p class="lede">A calm word-grid puzzle for iPhone. Each board is a grid of letters; you slide whole rows and columns, with wraparound, until every target word lines up across a row or down a column. Free in v1.0: no ads, no purchases, no tracking.</p>
+    <p class="muted">App Store pending. The repo is private. <a href="../shiftie/">Get Shiftie</a></p>
+
+    <h2>The slide</h2>
+    <p>Drag a row left or right, or a column up or down. Letters that fall off one edge wrap round to the other, and one slide is one move. A board is won when every target word appears somewhere in the grid, reading left to right in a row or top to bottom in a column, and one slide can complete several words at once.</p>
+    <p>The score is the move count, lower is better. Most puzzles have a par, and the result screen grades your moves against it. Stuck players can give up to see a worked solution; after six seconds without a move, a near-miss nudge breathes on the tiles that are almost there, so the game never plays itself for you. Boards come in six sizes, from 5×5 to 10×10.</p>
+    <p>The first lesson is a real board: the how-to-play sheet is a 5×5 tutorial where you drag SHIFT into place.</p>
+
+    <h2>Dailies and streaks</h2>
+    <p>There is a new set of daily puzzles each day, served at three sizes so casual and hardcore players both get a daily ritual: 5×5, 6×6 and 8×8. They are generated deterministically from a seed, so everyone gets the same boards, and each size has a Game Center leaderboard ranked by fewest moves. The word pool that feeds the generator is frozen for launch, because changing it would change every future daily.</p>
+    <p>Dailies are identified by a global UTC puzzle day. Results and streaks are stamped with the puzzle's day rather than the clock's, which is what fixed the streaks that were lost to a solve straddling midnight. A countdown shows when the next set arrives, and a solved daily can be shared in a short text that shows the day, the moves and the par.</p>
+
+    <h2>The archive</h2>
+    <p>Beyond the dailies sits an archive of curated boards across the six sizes, grouped into word packs (Everyday, Animals, Travel) and into Warm-up, Tricky and Expert chapters. Every pack is included in v1.0. Mastery counts distinct boards solved, so replaying one board cannot farm it; total solves count the replays, and the two numbers mean the same thing everywhere in the app.</p>
+
+    <h2>Challenges by link</h2>
+    <p>A challenge sends a friend your exact board and your move count. It travels as a link or as a short code that can be pasted in. The friend lands on an interstitial with the board size, the words and the par, and the sender's moves to beat, with a "Not now" way out. Custom boards work the same way: type your own words and the app builds a board that contains them, then shares it by link or code.</p>
+    <p>This site carries the file that lets those links open the app, and links to a challenge show a "Get Shiftie" page to anyone who does not have it yet. Turning them on in the app is the last step queued.</p>
+
+    <h2>Ember Editorial</h2>
+    <p>The look is called Ember Editorial: warm editorial paper in light mode, cool charcoal in dark, a coral-to-amber ember as the only accent, and the Fraunces serif for display type. Solved tiles turn ember. Colour and type live as tokens in one place, every surface adapts to light and dark, and every animated part respects Reduce Motion.</p>
+
+    <footer>
+      <p>From the project's README, design document and launch handoff.</p>
+    </footer>
+  </main>
+</body>
+</html>
