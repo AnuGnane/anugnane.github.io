@@ -50,6 +50,9 @@ When no package is ready, add up to three new ones, each sized for one run: a ca
 - [x] **S-6 Shunt.** From `docs/SPEC.md` and `docs/DESIGN.md` in the Outbound repo: a turn-based block sliding puzzle for iPhone, the tick, the ink tray, the generator that unbuilds levels from the solved board, the two-engine check. In development, no link; the repo is private. No screenshots unless `docs/mockups/` has images that are clearly renders of the game.
 - [x] **S-7 Shiftie.** A case study from `docs/DESIGN.md`, `HANDOFF.md` and the README in `shift-game` (once SH-1 there has written one): the sliding-word mechanic, dailies and streaks, the archive, challenges by link, the Ember Editorial look. App Store pending; link `/shiftie/`. The repo is private.
 - [x] **S-8 The rest, one line each.** PROSPECT, Prisma Puzzles and CarryTheOne on the home page under "Also", from whatever README is reachable; names only where none is. Then a pass over the home page's order and copy.
+- [ ] **S-9 Live links.** `curl` every external link on the site (the live map, the game, the repos, anything in the case studies) and expect it to answer. A dead link to an Anu repo or page is removed or pointed at what the repo now names; never at a guess. List each link and its status in the PR.
+- [ ] **S-10 Wizard Shootout, again.** A pass over `projects/wizard-shootout.html` against the repo's README and ROADMAP as they stand now (both changed after the page was written on 7 October): anything stale is fixed, anything new that the page's sections already cover is added in the same plain voice. No new claims.
+- [ ] **S-11 gaffer, again.** A pass over `projects/gaffer.html` and its home-page line against the FPL repo's `README.md` and `docs/GUIDE.md` as they stand now (both changed after 7 October): fix anything stale. Mention no key, no config, no data path.
 
 ## Inbox
 
