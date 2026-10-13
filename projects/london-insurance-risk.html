@@ -22,7 +22,7 @@
     <p>Ten open sources, all under the Open Government Licence, put onto one geography: the 2011 census small areas that the deprivation indices, boundaries and Scottish Data Zones all share.</p>
     <ul>
       <li><strong>Crime:</strong> street-level vehicle crime from data.police.uk for England and Wales; Recorded Crime in Scotland through a SPARQL endpoint.</li>
-      <li><strong>Deprivation:</strong> the English, Welsh and Scottish indices, ranked within each nation.</li>
+      <li><strong>Deprivation:</strong> the English, Welsh and Scottish indices, ranked within each nation. Their crime sub-domain drives the premium; Wales has no pure crime domain, so its Community Safety domain stands in as the documented nearest analogue.</li>
       <li><strong>Traffic:</strong> about 22,000 DfT count points, as the mean daily flow within 2 km of each area.</li>
       <li><strong>Who lives there:</strong> Census 2021 (England and Wales) and 2022 (Scotland) for the young-driver share and cars per household.</li>
       <li><strong>Diagnostics on the map, not in the price:</strong> road collisions, flood extents and local-authority traffic.</li>
@@ -33,12 +33,12 @@
     <p>Ordinary least squares on the log of each area's premium relative to the national average, with area-clustered standard errors. Modelling the ratio strips out the national price level and its drift over time, leaving the effect of place; absolute pounds come back at the end by pinning to the latest published national average.</p>
     <p>It is deliberately small, because the calibration sample honestly is: 106 matched observations across 30 areas. Every feature enters as a rank percentile within comparable groups, so no outlier can blow up its own prediction and three nations' different scales line up.</p>
     <ul>
-      <li><strong>An evidence gate.</strong> A feature gets in only with an independent partial correlation at acceptable collinearity, or by winning a leave-one-area-out head-to-head. It has said no more often than yes: population density, flood risk and road casualties were all gated out.</li>
-      <li><strong>Place and composition.</strong> Each area gets three numbers: the full premium, a place-only counterfactual with demographics held at the national median, and the uplift between them. Composition alone explains more of the spread than place alone, and that is reported as a finding.</li>
-      <li><strong>Explainable to the pound.</strong> Each premium decomposes into an exact £ step per factor from a median baseline, summing to the headline figure with no residual.</li>
-      <li><strong>Honest intervals.</strong> A cluster bootstrap, widened by the out-of-sample error, gives every area a low and high premium.</li>
+      <li><strong>An evidence gate.</strong> A feature gets in only with an independent partial correlation at acceptable collinearity, or by winning a leave-one-area-out head-to-head. It has said no more often than yes: population density, flood risk and road casualties were all gated out, and in the July 2026 wave the crime sub-domain replaced overall deprivation.</li>
+      <li><strong>Place and composition.</strong> Each area gets three numbers: the full premium, a place-only counterfactual with demographics held at the national median, and the uplift between them. Composition alone explains more of the spread (R² 0.88) than place alone (R² 0.76), and that is reported as a finding.</li>
+      <li><strong>Explainable to the pound.</strong> Each premium decomposes into an exact £ step per factor from a £537 baseline (every feature at the median), summing to the headline figure with no residual.</li>
+      <li><strong>Honest intervals.</strong> A cluster bootstrap, widened by the out-of-sample error, gives every area a low and high premium, with a median width of £373.</li>
     </ul>
-    <p>From the July 2026 calibration: a panel R² of 0.930, a leave-one-area-out error of £76.51, a temporal back-test error of £69.76, and a modelled premium span of £186 to £1,578 across Great Britain.</p>
+    <p>From the July 2026 calibration: a panel R² of 0.930, a leave-one-area-out error of £76.51, a temporal back-test error of £69.76, a Spearman rank agreement of 0.974 between predicted and actual premiums, and a modelled premium span of £186 to £1,578 across Great Britain.</p>
 
     <h2>The live map</h2>
     <p>A static React and MapLibre map on GitHub Pages: search any GB postcode, see the area's premium and its per-factor breakdown. There is no server in production.</p>
