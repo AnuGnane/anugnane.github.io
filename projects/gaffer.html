@@ -35,7 +35,8 @@
       <li><strong>Transfers priced across the horizon.</strong> A dynamic program values holding a free transfer, so taking a points hit now competes fairly with banking the transfer.</li>
       <li><strong>Chip timing as optimal stopping.</strong> A chip plays when this week's gain clears the bar of what waiting could still buy. On a replayed season it was the biggest measured win in the project's history.</li>
       <li><strong>A scenario sweep.</strong> The board is re-solved many times under calibrated noise, and a move that wins in only a handful of those solves is dropped as noise-chasing.</li>
-      <li><strong>Restraint.</strong> A transfer ladder prices every level of appetite, from banking up to three hits, on one shared set of simulated outcomes. The advice steps up a rung only when the higher one wins often enough, and says which step it refused and why.</li>
+      <li><strong>Restraint.</strong> A transfer ladder prices every level of appetite, from banking up to three hits, on one shared set of simulated outcomes. The advice steps up a rung only when the higher one wins often enough, and says which step it refused and why. On the replayed 2024-25 season it finished nine points behind the unrestrained planner, well inside the spread between seeds, for a third of the hits.</li>
+      <li><strong>A real bench.</strong> Bench order, the reserve keeper and the vice-captain are priced by each player's actual chance of appearing rather than population averages.</li>
       <li><strong>A league tilt.</strong> With a mini-league set, the planner leans towards differentials when you are chasing and towards covering rivals when you are defending. Reported expected points stay the raw model numbers.</li>
     </ul>
 
@@ -50,7 +51,7 @@
     </ul>
 
     <h2>The web app</h2>
-    <p>The same advice is served as a local web app in six hubs — This Week, Planning, Players, League, Live and Model — reading the same files the command line writes, so the terminal, the report and the app can never disagree. In the League hub, the Field panel prices your week against 300 synthetic managers drawn from the sampled top-10k ownership, and states its limits beside the number. It also gives the chance that your banked total plus this simulated week reaches the total projected for 10,000th place. That figure stays a named empty state until two gameweeks are banked, and again once the week is under way. It is drawn in one design language: hairline rules rather than cards, tabular figures, and colour spent only where it means something. Pages render in dark and light, and at phone width.</p>
+    <p>The same advice is served as a local web app in six hubs — This Week, Planning, Players, League, Live and Model — reading the same files the command line writes, so the terminal, the report and the app can never disagree. Under the week's brief, a question box answers your own questions from the same facts and under the same truth check, and the answers are never saved. In the League hub, the Field panel prices your week against 300 synthetic managers drawn from the sampled top-10k ownership, and states its limits beside the number. It also gives the chance that your banked total plus this simulated week reaches the total projected for 10,000th place. That projection is the latest daily reading of the season total at that rank, plus its average weekly rise so far. That figure stays a named empty state until two gameweeks are banked, and again once the week is under way. It is drawn in one design language: hairline rules rather than cards, tabular figures, and colour spent only where it means something. Pages render in dark and light, and at phone width.</p>
 
     <footer>
       <p>From the project's README and guide.</p>
