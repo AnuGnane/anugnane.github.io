@@ -31,7 +31,7 @@
     <p>Par comes from an A* search whose heuristic is the number of blocks still on the board. On the first chapter that took the solve from 194,000 states and fifty seconds to 634 states and a fraction of a second. Recipes ramp each chapter in bands, each denser than the last, and a level that measures badly is thrown away, never patched.</p>
 
     <h2>Two engines</h2>
-    <p>The rules exist twice: a Python reference that is the rulebook, and the Swift engine the app plays. Every rule change lands in Python first, with a level that exercises it, then in Swift. Python replays every stored solution and re-solves a sample to confirm the pars agree, and anything the two disagree on fails the pipeline. Off the solved paths too, seeded random play is written out by the Python rulebook, every legal move set and state along the way, and the Swift engine replays it step for step.</p>
+    <p>The rules exist twice: a Python reference that is the rulebook, and the Swift engine the app plays. Every rule change lands in Python first, with a level that exercises it, then in Swift. Python replays every stored solution and re-solves every level to confirm the pars agree, and anything the two disagree on fails the pipeline. Off the solved paths too, seeded random play is written out by the Python rulebook, every legal move set and state along the way, and the Swift engine replays it step for step.</p>
 
     <footer>
       <p>From the project's spec, design and generator notes.</p>
