@@ -14,11 +14,12 @@ While Anu is away (October 2026) the site is built by scheduled cloud agents wor
 - `.nojekyll` — serves the files as they are, which keeps `.well-known/` published.
 - `styles.css` — the one stylesheet. Colours are tokens on `:root`, with a dark set under `prefers-color-scheme: dark`; `--accent` is the one accent colour.
 - `scripts/check.mjs` — the gate.
+- `README.md` — this file. `HOLIDAY.md` — the holiday queue and its rules.
 
 ## Adding a project
 
 1. Add a row to the `<ul class="projects">` list in `index.html`: an `<h3>` with the name and a `<span class="status">` (Live, In development or App Store pending), one line from the project's own README, and a `<p class="links">` with the case study, any live link and the repo link. Leave out a link where none exists, and the repo link where the repo is private (Shiftie and Shunt have none).
-2. For a case study, copy `index.html`'s `<head>` into `projects/<name>.html`, give it its own `<title>` (`<Name> — Anu Gnane`), link the stylesheet as `../styles.css`, open `<main class="prose">` with the `<p class="crumb"><a href="../">Anu Gnane</a></p>` link home, end with a `<footer>` saying which of the project's docs the page is from, and link the page from the row as "Case study".
+2. For a case study, copy `index.html`'s `<head>` into `projects/<name>.html`, give it its own `<title>` (`<Name> — Anu Gnane`) and its own description meta, saying only what the page says, link the stylesheet as `../styles.css`, open `<main class="prose">` with the `<p class="crumb"><a href="../">Anu Gnane</a></p>` link home, end with a `<footer>` saying which of the project's docs the page is from, and link the page from the row as "Case study".
 3. Say only what the project's repo says. Screenshots only from the project's own repo or docs; never a placeholder.
 4. Rows go in status order: Live, then App Store pending, then In development.
 5. A project whose repo has no README goes under "Also" (`<ul class="also">`) by name only, with no link.
