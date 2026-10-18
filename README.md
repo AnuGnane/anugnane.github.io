@@ -7,7 +7,7 @@ While Anu is away (October 2026) the site is built by scheduled cloud agents wor
 ## Layout
 
 - `index.html` — the home page: the `<!-- Anu: your words here -->` intro block, the projects list and the "Also" list.
-- `projects/` — one case study per project, `projects/<name>.html`.
+- `projects/` — one case study per project, `projects/<name>.html`, plus an empty `projects/.gitkeep`.
 - `shiftie/` — Shiftie's link pages: `index.html` (the **Get Shiftie** page), `privacy.html` and `support.html`, the App Store privacy and support URLs.
 - `.well-known/apple-app-site-association` — the AASA file Apple's CDN fetches for Shiftie's `/challenge/*` Universal Links. `apple-app-site-association` at the root is the legacy fallback copy. Both are byte for byte the reference copies in the `shift-game` repo's `web/` folder, because the app ID and the paths are defined by that app; when they change there, copy them here unedited.
 - `404.html` — GitHub Pages serves it for every unmatched path, so it is also the landing page for Shiftie's `/challenge/*` links on a device without the app: a `/challenge/` path shows "A friend challenged you", a **Get Shiftie** link and, for code and daily links, an **Open in Shiftie** `shift://` retry; any other path shows "Not found". Its links are root-absolute because it is served at any depth.
