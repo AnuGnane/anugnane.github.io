@@ -14,6 +14,16 @@
     <p class="lede">A native iPhone block sliding puzzle in the Color Block Jam and Block Out family, with one twist: the board is turn based. Drag polyomino blocks out through gates of their own colour, and every move you make advances the board one tick. No lives, no ads, no purchases. Built for one person first, the App Store second.</p>
     <p class="muted">In development. The repo is private.</p>
 
+    <figure class="hero hero-phone hero-board">
+      <div class="frame">
+        <picture>
+          <source srcset="../img/shunt-board-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="../img/shunt-board-light.webp" width="650" height="700" alt="A Shunt board: coloured polyomino blocks on a grid, with a gate of each colour on the walls">
+        </picture>
+      </div>
+      <figcaption>A block picked up on the board, rendered by the game's own picture tests.</figcaption>
+    </figure>
+
     <h2>The loop</h2>
     <p>Blocks are polyominoes of one to five cells in up to seven colours, and they keep their shape. One drag moves one block along any path of free cells, any distance; it cannot squeeze through a gap narrower than itself or cut a corner. A block leaves when it slides off the board through the gate of its colour, and that gate has to be wide enough for the side the block presents. A level is done when every block is out.</p>
     <p>Journey is scored by moves against par, never by time. Par is the solver's optimum for the level: three stars at or under par, two within three over, one for any solve. An elapsed clock is shown alongside and can be switched off; it never affects par, stars or progress. The arcade itch goes to Rush, a timed replay of any solved Journey level: six seconds on the clock for each par move, thirty at least, with the best time kept for each level and no par or stars.</p>

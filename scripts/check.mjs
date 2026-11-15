@@ -1,4 +1,4 @@
-// The gate (HOLIDAY.md): every internal link and image resolves, and every
+// The gate (HOLIDAY.md): every internal link and image (src and srcset) resolves, and every
 // page has a <title> and a lang. Node only, no packages.
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, dirname, relative, resolve } from "node:path";
@@ -37,7 +37,12 @@ for (const file of files) {
   const title = html.match(/<title>([\s\S]*?)<\/title>/i);
   if (!title || title[1].trim() === "") problems.push(`${rel}: no <title>`);
   if (!/<html[^>]*\slang="[^"]+"/i.test(html)) problems.push(`${rel}: no lang on <html>`);
-  for (const [, attr, ref] of html.matchAll(/\s(href|src)="([^"]*)"/gi)) {
+  const found = [];
+  for (const [, attr, ref] of html.matchAll(/\s(href|src)="([^"]*)"/gi)) found.push([attr, ref]);
+  // A <source srcset> (the dark picture) is a comma list of "url [descriptor]".
+  for (const [, list] of html.matchAll(/\ssrcset="([^"]*)"/gi))
+    for (const part of list.split(",")) found.push(["srcset", part.trim().split(/\s+/)[0]]);
+  for (const [attr, ref] of found) {
     if (/^(https?:|mailto:|tel:|data:|#)/i.test(ref) || ref.startsWith("//")) continue;
     refs++;
     if (!resolves(file, ref)) problems.push(`${rel}: ${attr}="${ref}" does not resolve`);

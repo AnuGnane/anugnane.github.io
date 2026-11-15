@@ -12,13 +12,14 @@ While Anu is away (October 2026) the site is built by scheduled cloud agents wor
 - `.well-known/apple-app-site-association` — the AASA file Apple's CDN fetches for Shiftie's `/challenge/*` Universal Links. `apple-app-site-association` at the root is the legacy fallback copy. Both are byte for byte the reference copies in the `shift-game` repo's `web/` folder, because the app ID and the paths are defined by that app; when they change there, copy them here unedited.
 - `404.html` — GitHub Pages serves it for every unmatched path, so it is also the landing page for Shiftie's `/challenge/*` links on a device without the app: a `/challenge/` path shows "A friend challenged you", a **Get Shiftie** link and, for code and daily links, an **Open in Shiftie** `shift://` retry; any other path shows "Not found". Its links are root-absolute because it is served at any depth.
 - `.nojekyll` — serves the files as they are, which keeps `.well-known/` published.
+- `img/` — the screenshots the home page and the case studies show, each from its project's own repo or live site.
 - `styles.css` — the one stylesheet. Colours are tokens on `:root`, with a dark set under `prefers-color-scheme: dark`; `--accent` is the one accent colour.
 - `scripts/check.mjs` — the gate.
 - `README.md` — this file. `HOLIDAY.md` — the holiday queue and its rules.
 
 ## Adding a project
 
-1. Add a row to the `<ul class="projects">` list in `index.html`: an `<h3>` with the name and a `<span class="status">` (Live, In development or App Store pending), one line from the project's own README, and a `<p class="links">` with the case study, any live link and the repo link. Leave out a link where none exists, and the repo link where the repo is private (Shiftie and Shunt have none).
+1. Add an `<li class="project">` to `index.html`: under **Projects** (`<ul class="projects">`) for live, released or App Store pending work, under **In development** (`<ul class="projects projects-dev">`) otherwise. Each has a `<div class="media">` with a screenshot from the project's own repo or site in `img/` (about 960 px wide for a landscape picture, WebP, under 200 KB, with `width`, `height`, `loading="lazy"` and real alt text; a `<picture>` with a `prefers-color-scheme: dark` `<source>` where the repo has a dark one; no picture in the repo means a `media-type` panel set in the project's own words, never a placeholder), then a `<div class="body">` with an `<h3>` holding the name and a `<span class="status">` pill (`status-live` for Live or Released), one line from the project's own README, and a `<p class="links">`: the primary action (live link, Play, Get Shiftie) as `<a class="button">`, then the case study and the repo as plain links. Leave out a link where none exists, and the repo link where the repo is private (Shiftie and Shunt have none).
 2. For a case study, copy `index.html`'s `<head>` into `projects/<name>.html`, give it its own `<title>` (`<Name> — Anu Gnane`) and its own description meta, saying only what the page says, link the stylesheet as `../styles.css`, open `<main class="prose">` with the `<p class="crumb"><a href="../">Anu Gnane</a></p>` link home, end with a `<footer>` saying which of the project's docs the page is from, and link the page from the row as "Case study".
 3. Say only what the project's repo says. Screenshots only from the project's own repo or docs; never a placeholder.
 4. Rows go in status order: Live, then App Store pending, then In development.
@@ -32,4 +33,4 @@ While Anu is away (October 2026) the site is built by scheduled cloud agents wor
 node scripts/check.mjs
 ```
 
-It walks every `.html` file, checks that every internal `href` and `src` resolves and that every page has a `<title>` and a `lang`, prints one result line, and exits 1 on any problem.
+It walks every `.html` file, checks that every internal `href`, `src` and `srcset` resolves and that every page has a `<title>` and a `lang`, prints one result line, and exits 1 on any problem.
