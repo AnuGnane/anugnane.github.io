@@ -1,6 +1,6 @@
 # anugnane.github.io
 
-Anu Gnane's portfolio. Plain HTML and CSS served by GitHub Pages from the root of `main`. No build step, no framework, no dependencies; `.nojekyll` tells Pages to serve the files as they are.
+Anu Gnana's portfolio. Plain HTML and CSS served by GitHub Pages from the root of `main`. No build step, no framework, no dependencies; `.nojekyll` tells Pages to serve the files as they are.
 
 While Anu is away (October 2026) the site is built by scheduled cloud agents working `HOLIDAY.md` one package a run, each as a PR the run itself merges once its gate and review pass (from 6 October 14:00). See `AnuGnane/autopilot` for the playbook.
 
@@ -21,7 +21,7 @@ While Anu is away (October 2026) the site is built by scheduled cloud agents wor
 ## Adding a project
 
 1. Add an `<li class="project">` to `index.html`: under **Projects** (`<ul class="projects">`) for live, released or App Store pending work, under **In development** (`<ul class="projects projects-dev">`) otherwise. Each has a `<div class="media">` with a screenshot from the project's own repo or site in `img/` (about 960 px wide for a landscape picture, WebP, under 200 KB, with `width`, `height`, `loading="lazy"` and real alt text; a `<picture>` with a `prefers-color-scheme: dark` `<source>` where the repo has a dark one; no picture in the repo means a `media-type` panel set in the project's own words, never a placeholder), then a `<div class="body">` with an `<h3>` holding the name and a `<span class="status">` pill (`status-live` for Live or Released), one line from the project's own README, and a `<p class="links">`: the primary action (live link, Play, Get Shiftie) as `<a class="button">`, then the case study and the repo as plain links. Leave out a link where none exists, and the repo link where the repo is private (Shiftie and Shunt have none).
-2. For a case study, copy `index.html`'s `<head>` into `projects/<name>.html`, give it its own `<title>` (`<Name> — Anu Gnane`) and its own description meta, saying only what the page says, link the stylesheet as `../styles.css`, open `<main class="prose">` with the `<p class="crumb"><a href="../">Anu Gnane</a></p>` link home, end with a `<footer>` saying which of the project's docs the page is from, and link the page from the row as "Case study".
+2. For a case study, copy `index.html`'s `<head>` into `projects/<name>.html`, give it its own `<title>` (`<Name> — Anu Gnana`) and its own description meta, saying only what the page says, link the stylesheet as `../styles.css`, open `<main class="prose">` with the `<p class="crumb"><a href="../">Anu Gnana</a></p>` link home, end with a `<footer>` saying which of the project's docs the page is from, and link the page from the row as "Case study".
 3. Say only what the project's repo says. Screenshots only from the project's own repo or docs; never a placeholder.
 4. Rows go in status order: Live, then App Store pending, then In development.
 5. A project whose repo has no README goes under "Also" (`<ul class="also">`) by name only, with no link.
