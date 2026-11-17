@@ -2,7 +2,7 @@
 
 Anu Gnana's portfolio. Plain HTML and CSS served by GitHub Pages from the root of `main`. No build step, no framework, no dependencies; `.nojekyll` tells Pages to serve the files as they are.
 
-While Anu is away (October 2026) the site is built by scheduled cloud agents working `HOLIDAY.md` one package a run, each as a PR the run itself merges once its gate and review pass (from 6 October 14:00). See `AnuGnane/autopilot` for the playbook.
+The site lists Anu's projects, with case studies and the App Store link, support and privacy pages for Shiftie and Shunt. It is maintained by pull requests: each passes the check below, and Anu approves and merges it; a merge to `main` is live within a minute or two. `HOLIDAY.md` is the record of the October 2026 holiday (6 to 23 October), when scheduled cloud agents worked its queue one package a run and merged their own PRs under its rules.
 
 ## Layout
 
