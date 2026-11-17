@@ -144,10 +144,10 @@ footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
 .project .links { margin-top: 1.25rem; }
 .project h3 { margin: 0; }
 
-/* Released work: a large picture of the thing beside its name. */
-.projects:not(.projects-dev) > .project + .project { margin-top: 3.5rem; }
-.projects:not(.projects-dev) h3 { font-size: 1.625rem; letter-spacing: -0.015em; }
-.projects:not(.projects-dev) .body p:not(.links) { max-width: 34rem; }
+/* Each project: a large picture of the thing beside its name. */
+.projects > .project + .project { margin-top: 3.5rem; }
+.projects h3 { font-size: 1.625rem; letter-spacing: -0.015em; }
+.projects .body p:not(.links) { max-width: 34rem; }
 
 .media {
   overflow: hidden;
@@ -188,47 +188,28 @@ footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
 .body { margin-top: 1.25rem; }
 
 @media (min-width: 52rem) {
-  .projects:not(.projects-dev) .project {
+  .projects .project {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     gap: 2.5rem;
     align-items: center;
   }
-  .projects:not(.projects-dev) .body { margin-top: 0; }
+  .projects .body { margin-top: 0; }
 }
-
-/* Work in development: quieter, smaller, two to a row on a wide screen. */
-.projects-dev {
-  display: grid;
-  gap: 1.5rem;
-}
-.projects-dev .project {
-  padding: 1rem;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-.projects-dev h3 { font-size: 1.25rem; }
-.projects-dev .media { aspect-ratio: 16 / 9; border-radius: calc(var(--radius) - 4px); }
-.projects-dev .body { margin-top: 1rem; }
 
 /* gaffer has no picture in its repo, so its panel is set in type. */
 .media-type {
   display: flex;
   align-items: flex-end;
-  padding: 1.25rem;
+  padding: clamp(1.25rem, 0.5rem + 2.5vw, 2.25rem);
 }
 .media-type p {
   margin: 0;
-  font-size: clamp(1.375rem, 1rem + 1.5vw, 1.875rem);
+  font-size: clamp(1.625rem, 1rem + 2.5vw, 2.75rem);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: var(--accent);
-}
-
-@media (min-width: 46rem) {
-  .projects-dev { grid-template-columns: 1fr 1fr; }
 }
 
 @media (prefers-color-scheme: dark) {
