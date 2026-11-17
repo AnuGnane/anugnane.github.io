@@ -82,6 +82,9 @@ img { max-width: 100%; height: auto; }
   white-space: nowrap;
 }
 
+/* The title's last word and its pill wrap together, so a pill never sits alone on a line. */
+.title-end { white-space: nowrap; }
+
 /* Links under a project: one optional button, then quiet text links. */
 .links {
   display: flex;
@@ -197,19 +200,27 @@ footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
   .projects .body { margin-top: 0; }
 }
 
-/* gaffer has no picture in its repo, so its panel is set in type. */
+/* gaffer has no picture in its repo, so its panel is set in type: a poster whose
+   three lines are sized to the panel's own width (cqi) and centred top to bottom.
+   The longest line is about 7.9em wide, so 10.4cqi fills 82% of the panel and
+   leaves room for a wider system font. The clamps are for browsers without cqi. */
 .media-type {
   display: flex;
-  align-items: flex-end;
-  padding: clamp(1.25rem, 0.5rem + 2.5vw, 2.25rem);
+  align-items: center;
+  container-type: inline-size;
 }
 .media-type p {
   margin: 0;
+  padding: 0 clamp(1.25rem, 0.5rem + 2.5vw, 2.25rem);
   font-size: clamp(1.625rem, 1rem + 2.5vw, 2.75rem);
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.05;
   letter-spacing: -0.02em;
+  white-space: nowrap;
   color: var(--accent);
+}
+@supports (font-size: 1cqi) {
+  .media-type p { padding: 0 9cqi; font-size: 10.4cqi; }
 }
 
 @media (prefers-color-scheme: dark) {
