@@ -2,7 +2,7 @@
 
 Anu Gnana's portfolio. Plain HTML and CSS served by GitHub Pages from the root of `main`. No build step, no framework, no dependencies; `.nojekyll` tells Pages to serve the files as they are.
 
-While Anu is away (October 2026) the site is built by scheduled cloud agents working `HOLIDAY.md` one package a run, each as a PR the run itself merges once its gate and review pass (from 6 October 14:00). See `AnuGnane/autopilot` for the playbook.
+The site lists Anu's projects, with case studies and the App Store link, support and privacy pages for Shiftie and Shunt. It is maintained by pull requests: each passes the check below, and Anu approves and merges it; a merge to `main` is live within a minute or two. `HOLIDAY.md` is the record of the October 2026 holiday (6 to 23 October), when scheduled cloud agents worked its queue one package a run and merged their own PRs under its rules.
 
 ## Layout
 
@@ -13,7 +13,7 @@ While Anu is away (October 2026) the site is built by scheduled cloud agents wor
 - `.well-known/apple-app-site-association` — the AASA file Apple's CDN fetches for Shiftie's `/challenge/*` Universal Links. `apple-app-site-association` at the root is the legacy fallback copy. Both are byte for byte the reference copies in the `shift-game` repo's `web/` folder, because the app ID and the paths are defined by that app; when they change there, copy them here unedited.
 - `404.html` — GitHub Pages serves it for every unmatched path, so it is also the landing page for Shiftie's `/challenge/*` links on a device without the app: a `/challenge/` path shows "A friend challenged you", a **Get Shiftie** link and, for code and daily links, an **Open in Shiftie** `shift://` retry; any other path shows "Not found". Its links are root-absolute because it is served at any depth.
 - `.nojekyll` — serves the files as they are, which keeps `.well-known/` published.
-- `img/` — the screenshots the home page and the case studies show, each from its project's own repo, live site or App Store screenshots, plus `share.jpg`, the 1200×630 picture every page names as its Open Graph image.
+- `img/` — the screenshots the home page and the case studies show, each from its project's own repo, live site or App Store screenshots (Shunt's dark-mode board is captured from the app the same way as its App Store screenshots), plus `share.jpg`, the 1200×630 picture every page names as its Open Graph image.
 - `favicon.svg` — the site icon.
 - `styles.css` — the one stylesheet. Colours are tokens on `:root`, with a dark set under `prefers-color-scheme: dark`; `--accent` is the one accent colour.
 - `scripts/check.mjs` — the gate.
