@@ -177,6 +177,7 @@ footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
   box-shadow: 0 0 0 1px var(--rule), 0 18px 40px rgba(20, 25, 27, 0.18);
 }
 .media-shiftie { background: #f1e3d7; }
+.media-shunt { background: #fcf6ed; }
 
 /* On a phone the map itself, not its side panel, fills the picture. */
 @media (max-width: 40rem) {
@@ -210,9 +211,6 @@ footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
 .projects-dev h3 { font-size: 1.25rem; }
 .projects-dev .media { aspect-ratio: 16 / 9; border-radius: calc(var(--radius) - 4px); }
 .projects-dev .body { margin-top: 1rem; }
-
-.media-shunt { background: #fcf6ed; }
-.media-shunt img { object-fit: contain; }
 
 /* gaffer has no picture in its repo, so its panel is set in type. */
 .media-type {
@@ -299,12 +297,11 @@ figcaption { margin-top: 0.6rem; color: var(--muted); font-size: 0.875rem; }
   max-height: 34rem;
   border-radius: 22px;
 }
-.hero-board .frame { padding: 1rem; background: #fcf6ed; }
-.hero-board img { border: 0; max-height: 26rem; }
 .hero-shiftie .frame { background: #f1e3d7; }
+.hero-shunt .frame { background: #fcf6ed; }
 
 @media (prefers-color-scheme: dark) {
-  .hero-board .frame { background: #1b1918; }
+  .hero-shunt .frame { background: #1b1918; }
   .hero-shiftie .frame { background: #2a1a18; }
 }
 
