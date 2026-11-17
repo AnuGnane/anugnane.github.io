@@ -9,11 +9,12 @@ While Anu is away (October 2026) the site is built by scheduled cloud agents wor
 - `index.html` — the home page: the `<!-- Anu: your words here -->` intro block, the projects list and the "Also" list.
 - `projects/` — one case study per project, `projects/<name>.html`, plus an empty `projects/.gitkeep`.
 - `shiftie/` — Shiftie's link pages: `index.html` (the **Get Shiftie** page), `privacy.html` and `support.html`, the App Store privacy and support URLs.
-- `shunt/` — Shunt's App Store pages: `support.html` and `privacy.html`, the support and privacy policy URLs, from the texts in section 1 of the Outbound repo's `docs/APPSTORE.md`. They keep `[your support email]` where the source has an address placeholder, as `shiftie/` does; it is Anu's to fill.
+- `shunt/` — Shunt's App Store pages: `support.html` and `privacy.html`, the support and privacy policy URLs. They began as the texts in section 1 of the Outbound repo's `docs/APPSTORE.md`; since 16 November 2026 these pages are the only copy, and that file says to change the privacy page whenever what Shunt sends to Game Center changes.
 - `.well-known/apple-app-site-association` — the AASA file Apple's CDN fetches for Shiftie's `/challenge/*` Universal Links. `apple-app-site-association` at the root is the legacy fallback copy. Both are byte for byte the reference copies in the `shift-game` repo's `web/` folder, because the app ID and the paths are defined by that app; when they change there, copy them here unedited.
 - `404.html` — GitHub Pages serves it for every unmatched path, so it is also the landing page for Shiftie's `/challenge/*` links on a device without the app: a `/challenge/` path shows "A friend challenged you", a **Get Shiftie** link and, for code and daily links, an **Open in Shiftie** `shift://` retry; any other path shows "Not found". Its links are root-absolute because it is served at any depth.
 - `.nojekyll` — serves the files as they are, which keeps `.well-known/` published.
-- `img/` — the screenshots the home page and the case studies show, each from its project's own repo or live site.
+- `img/` — the screenshots the home page and the case studies show, each from its project's own repo, live site or App Store screenshots, plus `share.jpg`, the 1200×630 picture every page names as its Open Graph image.
+- `favicon.svg` — the site icon.
 - `styles.css` — the one stylesheet. Colours are tokens on `:root`, with a dark set under `prefers-color-scheme: dark`; `--accent` is the one accent colour.
 - `scripts/check.mjs` — the gate.
 - `README.md` — this file. `HOLIDAY.md` — the holiday queue and its rules.
