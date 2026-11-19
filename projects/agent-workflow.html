@@ -90,7 +90,7 @@
       <li><strong>Rule files.</strong> Each repo's <code>CLAUDE.md</code> or <code>AGENTS.md</code> still ruled, and each queue restated its hard rules: files never to open (environment, CSV and key files), paths never to edit (SQL, cron routes, data snapshots, the Xcode project), no new dependencies, never force-push.</li>
       <li><strong>Gates.</strong> Each repo's own: the full Xcode suite for Shunt, pytest and a slow golden test for gaffer, tests and a build for the web projects.</li>
       <li><strong>Caps.</strong> One unfinished branch and one open <code>needs-mac</code> pull request per lane; from 15 October, three packages a run.</li>
-      <li><strong>What stayed with the owner.</strong> Signing, App Store Connect, devices, purchases and accounts were never queued. Actions that the tooling's permission checks refused stayed with the owner: installing the Mac lane's background job, and pushing the Wizard Shootout v1.0.0 release tag from the cloud. One run also refused a "go" for that release because another agent session, not the owner, had written it.</li>
+      <li><strong>What stayed with the owner.</strong> Signing, App Store Connect, devices, purchases and accounts were never queued. Two actions that the tooling's permission checks refused also stayed with the owner: installing the Mac lane's background job, and pushing the Wizard Shootout v1.0.0 release tag from the cloud. One run also refused a "go" for that release because another agent session, not the owner, had written it.</li>
     </ul>
 
     <h2>October in numbers</h2>
@@ -102,8 +102,7 @@
       <li><strong>A lane died, and nothing said so.</strong> On 16 October the platform disabled the routine for one of Shunt's lanes: its environment setting was one character short, almost certainly from a prompt update. Nothing alerted on it; it was found eight days later, while everything was being switched off.</li>
       <li><strong>The ramp outran the limits.</strong> Runs that took eight packages, read every notification and printed whole diffs used up the planning model's weekly allowance in under two days. A further ramp to 46 runs a day on 17 October was undone on the 20th, before the weekly limit hit.</li>
       <li><strong>The Mac under load.</strong> Seven Mac shifts hit the session limit before writing a handoff. Simulator processes kept the laptop's load in the hundreds for hours; one shift on 17 October merged nothing.</li>
-      <li><strong>Permission checks traded for throughput.</strong> On 8 October the permission layer refused the Mac session's merges, and four gated pull requests waited for the owner's phone. From then on the Mac lane ran with Claude Code's permission checks skipped, guarded by the queue's rules, the gate, the reviewer and a time limit.</li>
-      <li><strong>Agents reviewing agents.</strong> Every self-merged pull request was reviewed by a subagent. Shunt's tests passed, but in November the owner found it "buggy during gameplay with the piece drags and mechanics" and held its release. An independent review of the fix then caught a regression before merge: a pick during an animation could grab the wrong block.</li>
+      <li><strong>Agents reviewing agents.</strong> Every self-merged pull request was reviewed by a subagent. One of the games passed all its tests, but in November the owner's own play found bugs in how pieces dragged, and held its release. An independent review of the fix then caught a regression before merge: a pick during an animation could grab the wrong piece.</li>
     </ul>
 
     <h2>How it runs now</h2>
