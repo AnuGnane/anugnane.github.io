@@ -7,6 +7,7 @@ The site lists Anu's projects, with case studies and the App Store link, support
 ## Layout
 
 - `index.html` — the home page: the `<!-- Anu: your words here -->` intro block, the projects list and the "Also" list.
+- **How these were built**, on the home page between Projects and "Also": one row in the projects' markup, with a `media-type` panel and no status pill, linking `projects/agent-workflow.html`, the case study on how the projects are built with AI agents; it is not a project, so it stays out of the status order.
 - `projects/` — one case study per project, `projects/<name>.html`, plus an empty `projects/.gitkeep`.
 - `shiftie/` — Shiftie's link pages: `index.html` (the **Get Shiftie** page), `privacy.html` and `support.html`, the App Store privacy and support URLs.
 - `shunt/` — Shunt's App Store pages: `support.html` and `privacy.html`, the support and privacy policy URLs. They began as the texts in section 1 of the Outbound repo's `docs/APPSTORE.md`; since 16 November 2026 these pages are the only copy, and that file says to change the privacy page whenever what Shunt sends to Game Center changes.
