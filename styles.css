@@ -186,6 +186,10 @@ footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
 }
 .media-shiftie { background: #f1e3d7; }
 .media-shunt { background: #fcf6ed; }
+/* Prisma Puzzles' screenshots are dark in both schemes, so its panel is too. */
+.media-prisma { background: #1d1a2b; }
+/* Vouched's page is wider than the panel: keep its headline, on the left, whole. */
+.media-vouched img { object-position: left center; }
 
 /* On a phone the map itself, not its side panel, fills the picture. */
 @media (max-width: 40rem) {
