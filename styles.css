@@ -306,6 +306,19 @@ figcaption { margin-top: 0.6rem; color: var(--muted); font-size: 0.875rem; }
   .hero-shiftie .frame { background: #2a1a18; }
 }
 
+/* The agent-workflow case study's diagram: inline SVG drawn in the site's tokens. */
+.flow svg { display: block; width: 100%; max-width: 25rem; height: auto; }
+.flow-box { fill: var(--surface); stroke: var(--rule); stroke-width: 1.5; }
+.flow-mac { stroke: var(--accent); }
+.flow-end { fill: var(--panel); }
+.flow-name { fill: var(--fg); font-size: 14px; font-weight: 600; }
+.flow-note { fill: var(--muted); font-size: 11.5px; }
+.flow-tag { fill: var(--accent); font-size: 11.5px; font-weight: 600; }
+.flow-line path { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+.flow-head path { fill: var(--muted); }
+.flow-mac-line { fill: none; stroke: var(--accent); stroke-width: 1.5; }
+.flow-mac-head { fill: var(--accent); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }

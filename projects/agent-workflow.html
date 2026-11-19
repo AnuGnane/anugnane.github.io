@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building with AI agents — Anu Gnana</title>
+  <meta name="description" content="How the projects on this site are built with AI agents: queue files, one pull request per package, each repo's own gate and a review before anything merges. With the unattended run of 6 to 23 October 2026, its numbers and what went wrong.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anu Gnana">
+  <meta property="og:title" content="Building with AI agents — Anu Gnana">
+  <meta property="og:description" content="How the projects on this site are built with AI agents: queue files, one pull request per package, each repo's own gate and a review before anything merges. With the unattended run of 6 to 23 October 2026, its numbers and what went wrong.">
+  <meta property="og:url" content="https://anugnane.github.io/projects/agent-workflow.html">
+  <meta property="og:image" content="https://anugnane.github.io/img/share-agent-workflow.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Building with AI agents, beside the words: one package, one pull request, every diff read">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://anugnane.github.io/img/share-agent-workflow.jpg">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="prose">
+    <p class="crumb"><a href="../">Anu Gnana</a></p>
+    <h1>Building with AI agents</h1>
+    <p class="lede">The projects on this site are built with AI agents: scheduled cloud agents and Claude Code sessions, working through GitHub pull requests. Around them is ordinary engineering: small packages from a queue, one pull request each, and the repo's own gate and a review before anything merges.</p>
+    <p class="muted">The playbook, its log and the agents' prompts are in a private repo.</p>
+
+    <h2>What it is</h2>
+    <p>The loop first ran unattended over a holiday, 6 to 23 October 2026, while the owner was away with a phone and agents merged their own pull requests in seven repos. No person read those diffs before they merged.</p>
+
+    <h2>How a piece of work moves</h2>
+    <ul>
+      <li><strong>Queue files.</strong> Each repo had a <code>HOLIDAY.md</code>: its rules, then packages sized for one run, each traced to the repo's own backlog and naming its files and its gate. A decision only the owner could make became a ruling with a default.</li>
+      <li><strong>Lanes.</strong> Each scheduled agent owned one section of one queue and one ID prefix, so two runs never took the same package; Shunt's repo had seven lanes. Planning lanes ran on Fable, coding lanes on Opus.</li>
+      <li><strong>One package, one pull request.</strong> A run did the package on its own branch and pasted the gate's result into the pull request. A reviewer subagent read the whole diff for anything not asked for, any weakened test and any secret; the run fixed what it found and merged.</li>
+      <li><strong>The Mac lane.</strong> What the cloud's Linux sandbox could not check (Swift app code, model changes needing local data, the risk map's pipeline) went up as <code>needs-mac</code> pull requests. When the laptop was idle, a script started a headless Claude Code session that gated them there, fixed what would not compile, and merged.</li>
+    </ul>
+
+    <figure class="flow">
+      <svg viewBox="0 0 340 424" role="img" aria-labelledby="flow-title flow-desc">
+        <title id="flow-title">How a package moves</title>
+        <desc id="flow-desc">A queue file feeds a cloud lane, which opens one pull request. Most pull requests then pass the repo's gate and a review, and merge. A pull request marked needs-mac goes instead to the Mac lane, which runs the gate on Xcode or the local data, fixes what it must, reviews and merges.</desc>
+        <g class="flow-line">
+          <path d="M100 50V68M100 124V142M100 198V216M100 272V290M100 346V364"/>
+        </g>
+        <g class="flow-head">
+          <path d="M95 66h10l-5 7zM95 140h10l-5 7zM95 214h10l-5 7zM95 288h10l-5 7zM95 362h10l-5 7z"/>
+        </g>
+        <path class="flow-mac-line" d="M200 173H284V216M284 346V364"/>
+        <path class="flow-mac-head" d="M279 214h10l-5 7zM279 362h10l-5 7z"/>
+        <text class="flow-tag" x="242" y="166" text-anchor="middle">needs-mac</text>
+
+        <rect class="flow-box" x="1" y="1" width="198" height="48" rx="8"/>
+        <text class="flow-name" x="100" y="21" text-anchor="middle">Queue file</text>
+        <text class="flow-note" x="100" y="38" text-anchor="middle">a section per lane</text>
+
+        <rect class="flow-box" x="1" y="75" width="198" height="48" rx="8"/>
+        <text class="flow-name" x="100" y="95" text-anchor="middle">Cloud lane</text>
+        <text class="flow-note" x="100" y="112" text-anchor="middle">takes the next package</text>
+
+        <rect class="flow-box" x="1" y="149" width="198" height="48" rx="8"/>
+        <text class="flow-name" x="100" y="169" text-anchor="middle">Pull request</text>
+        <text class="flow-note" x="100" y="186" text-anchor="middle">one per package</text>
+
+        <rect class="flow-box" x="1" y="223" width="198" height="48" rx="8"/>
+        <text class="flow-name" x="100" y="243" text-anchor="middle">Gate</text>
+        <text class="flow-note" x="100" y="260" text-anchor="middle">the repo's own checks</text>
+
+        <rect class="flow-box" x="1" y="297" width="198" height="48" rx="8"/>
+        <text class="flow-name" x="100" y="317" text-anchor="middle">Review</text>
+        <text class="flow-note" x="100" y="334" text-anchor="middle">the whole diff read</text>
+
+        <rect class="flow-box flow-mac" x="229" y="223" width="110" height="122" rx="8"/>
+        <text class="flow-name" x="284" y="252" text-anchor="middle">Mac lane</text>
+        <text class="flow-note" x="284" y="273" text-anchor="middle">Xcode or</text>
+        <text class="flow-note" x="284" y="289" text-anchor="middle">local data:</text>
+        <text class="flow-note" x="284" y="305" text-anchor="middle">gate, fix,</text>
+        <text class="flow-note" x="284" y="321" text-anchor="middle">review</text>
+
+        <rect class="flow-box flow-end" x="1" y="371" width="338" height="48" rx="8"/>
+        <text class="flow-name" x="170" y="391" text-anchor="middle">Merge</text>
+        <text class="flow-note" x="170" y="408" text-anchor="middle">a website merge is a deploy</text>
+      </svg>
+      <figcaption>How a package moved during the October run.</figcaption>
+    </figure>
+
+    <h2>What kept it in bounds</h2>
+    <ul>
+      <li><strong>Rule files.</strong> Each repo's <code>CLAUDE.md</code> or <code>AGENTS.md</code> still ruled, and each queue restated its hard rules: files never to open (environment, CSV and key files), paths never to edit (SQL, cron routes, data snapshots, the Xcode project), no new dependencies, never force-push.</li>
+      <li><strong>Gates.</strong> Each repo's own: the full Xcode suite for Shunt, pytest and a slow golden test for gaffer, tests and a build for the web projects.</li>
+      <li><strong>Caps.</strong> One unfinished branch and one open <code>needs-mac</code> pull request per lane; from 15 October, three packages a run.</li>
+      <li><strong>What stayed with the owner.</strong> Signing, App Store Connect, devices, purchases and accounts were never queued. Actions that the tooling's permission checks refused stayed with the owner: installing the Mac lane's background job, and pushing the Wizard Shootout v1.0.0 release tag from the cloud. One run also refused a "go" for that release because another agent session, not the owner, had written it.</li>
+    </ul>
+
+    <h2>October in numbers</h2>
+    <p>Counted on GitHub for 6 to 23 October 2026, London time: <strong>1,049 pull requests merged</strong> across seven repos. Shiftie 259, gaffer 247, Shunt 169, Wizard Shootout 106, this site 95, the risk map 90 and Vouched 83 (the last two from 13 October). 69 were <code>needs-mac</code> pull requests.</p>
+    <p>The first week merged 143. On 13 October the schedule went from 17 cloud runs a day to 37, and from the 14th each day merged between 43 and 124. A count is not value: 176 of the 1,049 only refilled a queue, and by 20 October some lanes were merging empty refills.</p>
+
+    <h2>What went wrong</h2>
+    <ul>
+      <li><strong>A lane died, and nothing said so.</strong> On 16 October the platform disabled the routine for one of Shunt's lanes: its environment setting was one character short, almost certainly from a prompt update. Nothing alerted on it; it was found eight days later, while everything was being switched off.</li>
+      <li><strong>The ramp outran the limits.</strong> Runs that took eight packages, read every notification and printed whole diffs used up the planning model's weekly allowance in under two days. A further ramp to 46 runs a day on 17 October was undone on the 20th, before the weekly limit hit.</li>
+      <li><strong>The Mac under load.</strong> Seven Mac shifts hit the session limit before writing a handoff. Simulator processes kept the laptop's load in the hundreds for hours; one shift on 17 October merged nothing.</li>
+      <li><strong>Permission checks traded for throughput.</strong> On 8 October the permission layer refused the Mac session's merges, and four gated pull requests waited for the owner's phone. From then on the Mac lane ran with Claude Code's permission checks skipped, guarded by the queue's rules, the gate, the reviewer and a time limit.</li>
+      <li><strong>Agents reviewing agents.</strong> Every self-merged pull request was reviewed by a subagent. Shunt's tests passed, but in November the owner found it "buggy during gameplay with the piece drags and mechanics" and held its release. An independent review of the fix then caught a regression before merge: a pick during an animation could grab the wrong block.</li>
+    </ul>
+
+    <h2>How it runs now</h2>
+    <p>On 24 October every routine was disabled and the Mac lane paused. Now one orchestrating session plans and reviews. It briefs separate agents, each in its own git worktree with one pull request per task, and reads every diff before anything merges.</p>
+    <ul>
+      <li>Briefs carry each repo's hard rules and a required report: what changed, the gate's output, what was verified and what was not, and anything done beyond the brief. Agents do exceed briefs; each case is flagged to the owner before merge.</li>
+      <li>iOS repos merge after a green build and test gate on the Mac. A website merge is a deploy, so it waits for the owner's explicit yes each time.</li>
+      <li>Anything that leaves the machine or carries legal weight stays with the owner: signing, uploads, App Store submission and release, and declarations.</li>
+    </ul>
+
+    <footer>
+      <p>From the October run's playbook, log, agent prompts and Mac-lane scripts, the queue and rule files in each repo, and merged pull requests counted on GitHub on 19 November 2026.</p>
+    </footer>
+  </main>
+</body>
+</html>
