@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EA FC agent — Anu Gnana</title>
+  <meta name="description" content="An agent that plays EA FC on an unmodified PS5 through a perception, decision and action loop: an HDMI capture card for its eyes, a virtual gamepad over Remote Play for its hands, and a policy learned from its owner's own play.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anu Gnana">
+  <meta property="og:title" content="EA FC agent — Anu Gnana">
+  <meta property="og:description" content="An agent that plays EA FC on an unmodified PS5 through a perception, decision and action loop: an HDMI capture card for its eyes, a virtual gamepad over Remote Play for its hands, and a policy learned from its owner's own play.">
+  <meta property="og:url" content="https://anugnane.github.io/projects/ea-fc-agent.html">
+  <meta property="og:image" content="https://anugnane.github.io/img/share-ea-fc-agent.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="EA FC agent, beside a High Contrast Mode match with the radar the agent reads">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://anugnane.github.io/img/share-ea-fc-agent.jpg">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="prose">
+    <p class="crumb"><a href="../">Anu Gnana</a></p>
+    <h1>EA FC agent</h1>
+    <p class="lede">An agent that plays EA FC on an unmodified PS5 through a software perception, decision and action loop. Teaching it is the point: scripted logic is only scaffolding, and the investment goes into learning from demonstrations of the owner's own play.</p>
+    <p class="muted">In development. Its first live matches were played offline, against the CPU, with the owner watching. The repo is private.</p>
+
+    <figure class="hero">
+      <img src="../img/ea-fc-agent.webp" width="960" height="544" alt="A match in EA FC in High Contrast Mode: a grey pitch, the two teams in flat pink and cyan, and the radar of player positions at the foot of the screen, which the agent reads">
+      <figcaption>A match in High Contrast Mode, with the radar the agent reads at the foot of the screen. From the project's repo.</figcaption>
+    </figure>
+
+    <h2>The problem</h2>
+    <p>The console is a sealed appliance: no API, no memory access, no mods. It offers exactly the two interfaces it gives a person, video out and controller in, so the agent has to see the way a player sees and act the way a player acts. And the game runs at 60 frames a second whether the agent is ready or not, with no pause, no reset, no parallel copies and no speed-up.</p>
+
+    <h2>Capture: eyes and hands kept apart</h2>
+    <ul>
+      <li><strong>Eyes:</strong> an HDMI capture card on a Linux server, read through v4l2 and OpenCV at 1080p and 60 frames a second. A dedicated card is deterministic, where a streamed picture is compressed and jittery.</li>
+      <li><strong>Hands:</strong> the console only accepts its own controllers, but Sony's Remote Play protocol takes controller input over the network. So chiaki-ng runs on the server over a direct ethernet cable, and a Python uinput virtual gamepad presents the agent to it as a controller. Remote Play survives purely as hands; its video is ignored.</li>
+    </ul>
+    <p>Keeping the two apart gives them independent failure modes, so bring-up debugs one at a time. The Linux server runs the loop, because uinput and v4l2 are Linux-only; a Mac does the training.</p>
+
+    <h2>Perception: the radar first</h2>
+    <p>The game draws its own top-down radar: every player and the ball as small marks. The agent parses it with classic computer vision, geometry first. Every mark is measured — its area, fill, circularity and holes — and classified by shape; colour decides only which team it belongs to. Colour alone could not separate what shape can, because the game fades the radar as play moves down the screen.</p>
+    <p>The game's own accessibility settings did the rest: High Contrast Mode with the pitch saturation at its minimum turns the radar's background grey (its median saturation measured 156 before and 0 after), and moving the opponents' radar colour off red keeps them apart from the selected-player ring. In the first live matches, the radar was read on 99.5% of ticks in open play.</p>
+
+    <h2>State: one vector</h2>
+    <p>What perception hands on is not raw detections but a 116-number state vector centred on the player being controlled: that player, the ball, the five nearest opponents and six nearest team-mates with their velocities from a frame-to-frame tracker, a summary of team shape, and the match context. It is always oriented as if attacking to the right, and mirrored copies double the training data. The layout follows EA's own SEED research on agents for FC 25.</p>
+    <p>The radar has limits, and the design states them up front: it carries no ball height, no facing and no animation, so a policy built on it should learn positional play and passing shape and stay weak in duels and in the air. A second eye, a frozen pretrained visual encoder on the main picture, is designed for when measurement shows that failure.</p>
+
+    <h2>Decision: learned from demonstrations</h2>
+    <p>Reinforcement learning from scratch is hopeless here — matches take fifteen minutes of wall-clock time and nothing can be reset or run in parallel. Imitation fits instead: because the owner's controller already routes through the server, every session played is a labelled dataset for free, controller events paired with frames and state.</p>
+    <ul>
+      <li><strong>A simulator prior.</strong> A policy was pretrained on Google Research Football, whose observations are close to this state vector, and put to a pre-registered A/B against training from scratch. Judged on how well each imitates the owner on sittings it never saw, the simulator start won: better on 24 of 32 episodes, with the 95% interval entirely above zero, and ahead on both FC 26 and FC 27.</li>
+      <li><strong>The deployed brain</strong> is small on purpose: a shared 116 → 512 → 512 trunk with four heads — direction, sprint, dribble and a tap for passes and shots. The Mac trains it and exports plain weights; the server runs the forward pass in numpy and never installs PyTorch.</li>
+    </ul>
+
+    <h2>Action: intents, not stick voltages</h2>
+    <p>Every 10 Hz tick, the decision is a set of intents. Direction, sprint and dribble are sent as absolute pad states every tick, and the mapper is idempotent, so only real changes reach the pad; a tap fires when its probability clears a calibrated threshold. In the first live matches the loop cost 6.2 ms of compute per tick at the median.</p>
+    <ul>
+      <li>It boots disarmed, and arms only when told to.</li>
+      <li>It disarms itself after five seconds without a valid radar — menus, replays, half-time — and re-arms once the radar has been back for three ticks, unless told to stay down.</li>
+      <li>Every run logs every tick: a hash of the state, the intents applied, each head's output and the pad edits.</li>
+    </ul>
+
+    <h2>The test gates</h2>
+    <ul>
+      <li><strong>Golden clips.</strong> Perception changes are gated by tests against real recorded footage, so computer-vision work needs no console. Seven gates have been live and passing since August, including a radar parse under 8 ms at the 90th percentile.</li>
+      <li><strong>A parity gate.</strong> Live mode refuses to start unless the server's numpy forward pass matches the Mac's reference outputs within a fixed tolerance on every head.</li>
+      <li><strong>A test suite</strong> of 527 tests on the server side.</li>
+      <li><strong>Look at the data.</strong> One early recording passed every mechanical check — frame count, readability, pixel variance — and was sixty seconds of a menu. Statistical checks cannot verify meaning.</li>
+    </ul>
+
+    <h2>Where it stands</h2>
+    <p>The first live matches, on 25 September 2026, did not pass their gate, and the logs say why. The runtime did its job: the gate passed on every start, perception was healthy, nothing stuck and disarming worked. The brain did not: it stays on its player and sprints to the end of the pitch, and it never passes or shoots — its tap probability peaked at 0.107 against a threshold of 0.1123. The next version, drafted and waiting for the owner's review, calibrates that threshold on live play, weights the tap head so it can learn to shoot, and gives the network a short history of states.</p>
+
+    <footer>
+      <p>From the project's design doc, architecture explainer, progress log, runtime spec and first live-match report.</p>
+    </footer>
+  </main>
+</body>
+</html>

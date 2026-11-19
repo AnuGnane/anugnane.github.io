@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vouched — Anu Gnana</title>
+  <meta name="description" content="A first-car running-cost checker for 17 to 24-year-olds in Great Britain: insurance, tax, fuel and MOT as one monthly number, every figure an estimate based on public data, with the insurance figures scaled by the GB car-insurance risk model.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anu Gnana">
+  <meta property="og:title" content="Vouched — Anu Gnana">
+  <meta property="og:description" content="A first-car running-cost checker for 17 to 24-year-olds in Great Britain: insurance, tax, fuel and MOT as one monthly number, every figure an estimate based on public data, with the insurance figures scaled by the GB car-insurance risk model.">
+  <meta property="og:url" content="https://anugnane.github.io/projects/vouched.html">
+  <meta property="og:image" content="https://anugnane.github.io/img/share-vouched.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Vouched, beside a screenshot of its home page">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://anugnane.github.io/img/share-vouched.jpg">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="prose">
+    <p class="crumb"><a href="../">Anu Gnana</a></p>
+    <h1>Vouched</h1>
+    <p class="lede">A first-car running-cost checker for drivers aged 17 to 24 in Great Britain, and the parents helping them. It shows what a car will really cost to keep each month — insurance, tax, fuel and MOT — and what its MOT history says, wherever the car was found: on Facebook, on Gumtree or on a forecourt.</p>
+    <p class="muted">Live at vouched.autos. The repo is private.</p>
+    <p class="links"><a class="button" href="https://vouched.autos/">Visit vouched.autos</a></p>
+
+    <figure class="hero">
+      <img src="../img/vouched.webp" width="960" height="544" alt="Vouched's home page: the headline &quot;Know what a car really costs before you fall for it&quot;, buttons to find a first car or check one you've found, and a line of figures beneath">
+      <figcaption>The home page, captured from the live site.</figcaption>
+    </figure>
+
+    <h2>What it does</h2>
+    <p>It sits on top of the places people already buy first cars and does not compete with them for the sale. No cars are listed for sale on it.</p>
+    <ul>
+      <li><strong>The First-Car Finder.</strong> Give it an age, a postcode and a budget, and it ranks 164 first cars by what they cost to keep each month: the insurance estimate plus road tax, fuel at your mileage and the MOT. The price of the car itself is shown separately, as the one-off it is.</li>
+      <li><strong>Check a car.</strong> Enter a registration (or paste the ad's text when there isn't one to hand) and get that car's monthly cost at your age beside its MOT history from the DVSA: a defect timeline, a mileage chart, colour and recall status, a verdict on the asking price, and questions to put to the seller. Each report has its own shareable link.</li>
+      <li><strong>The risk map.</strong> Every neighbourhood in England, Wales and Scotland scored for car-insurance risk, with a page for each of 2,773 postcode districts and a set of ranking pages.</li>
+      <li><strong>Guides</strong> on the questions a first car raises — insurance groups, where you live against what you drive, the cost of charging an electric car, the MOT failures that should end a viewing, automatic or manual — with every figure in them derived from the live data, not typed in.</li>
+      <li><strong>The trust pages.</strong> An accuracy page that records the site's own corrections, and a panel watch that records real observations of the insurers on a price-comparison panel the project tracks.</li>
+    </ul>
+
+    <h2>Where the insurance figures come from</h2>
+    <p>Every insurance estimate starts from a London base: the expected annual premium for a new driver on a comprehensive black-box policy, calibrated against published young-driver premium data. Give Vouched a postcode and it scales that figure by what a risk model says your postcode district does to a premium, relative to London.</p>
+    <p>That risk model is the <a href="london-insurance-risk.html">GB Car-Insurance Risk Map</a>. Vouched's data engine takes the model's calibrated premium for every small area, joins each live postcode to its area, and takes the postcode-weighted median for each district. Only the ratios between areas are used, so the model's own base profile cancels out. The map on Vouched is the same model's tiles, with its per-area breakdown: for each of the 41,729 areas, the baseline plus the steps adds up exactly to the premium, and the model's commit is recorded with the data so a stale copy can be caught. Northern Ireland is not covered, for want of open data.</p>
+
+    <h2>The rules it is held to</h2>
+    <ul>
+      <li><strong>No invented figures.</strong> Every number traces to a fetched, cited source, and empty beats guessed. A scan guards the guides against figures written in by hand.</li>
+      <li><strong>Estimates, never quotes.</strong> Every figure is an estimate based on public data, shown as a range with its confidence and the date it was checked. A price range with weak evidence behind it is shown with less weight than a strong one.</li>
+      <li><strong>No insurance advice.</strong> Where insurance comes up, Vouched introduces you to authorised providers for a real quote.</li>
+      <li><strong>No scraping</strong> of comparison sites or listing platforms. Real quotes gathered by hand are a validation set only.</li>
+    </ul>
+
+    <h2>How it is built</h2>
+    <ul>
+      <li><strong>The site:</strong> Next.js 14 (App Router) and Tailwind, in an editorial print style. The estimate, the ranking and the checks live in plain TypeScript modules, each with its tests, and the estimate reproduces the data contract's test cases exactly.</li>
+      <li><strong>The data engine:</strong> a Python package with no dependencies beyond the standard library, which builds the frozen data files the site reads. Its ingest refreshes weekly fuel prices from DESNZ, Euro NCAP ratings, listing-price medians from eBay's API and MOT failure rates from the DVSA's bulk extracts, and every file it writes carries a provenance record that the site shows as a "figures checked" stamp.</li>
+      <li><strong>Live checks:</strong> the DVSA MOT History API behind Check a car, and scheduled jobs for alerts and housekeeping, each of which refuses to run until its secret is set.</li>
+    </ul>
+
+    <h2>What was hard</h2>
+    <ul>
+      <li><strong>Reading the market right.</strong> In late July two insurer groups left the price-comparison panel the project tracks, and the cheapest quote observed rose by about half. The project first read that as the market moving and re-based every estimate upward. On 10 August it concluded the move came from who was on the panel — the insurers still on it had not moved — and reverted all of it. The panel watch, which records only what was observed, stayed.</li>
+      <li><strong>Configuration that fails silently.</strong> A mismatched environment-variable name once lost nine days of data without an error. The names the code reads are now listed in one place, and a guard that would default to open defaults to closed instead.</li>
+    </ul>
+
+    <footer>
+      <p>From the project's README, its agent rules and method notes, and the live site.</p>
+    </footer>
+  </main>
+</body>
+</html>
