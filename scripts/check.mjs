@@ -1,5 +1,6 @@
-// The gate (HOLIDAY.md): every internal link and image (src, srcset and the og:image
-// share picture) resolves, and every page has a <title> and a lang. Node only, no packages.
+// The gate (HOLIDAY.md): every internal link and image (src, srcset and the og:image and
+// twitter:image share picture) resolves, a page with og:image has a matching twitter:image,
+// and every page has a <title> and a lang. Node only, no packages.
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -45,6 +46,14 @@ for (const file of files) {
   // The share image is an absolute URL on this site, so check it as the root-relative path.
   for (const [, prop, url] of html.matchAll(/<meta\s+(?:property|name)="((?:og|twitter):image)"\s+content="https:\/\/anugnane\.github\.io(\/[^"]*)"/gi))
     found.push([prop, url]);
+  // A page with a share image names the same picture for X (twitter:image) as for og:image.
+  const metaContent = (prop) =>
+    html.match(new RegExp(`<meta\\s+(?:property|name)="${prop}"\\s+content="([^"]*)"`, "i"))?.[1];
+  const ogImage = metaContent("og:image");
+  const twitterImage = metaContent("twitter:image");
+  if (ogImage !== undefined && twitterImage === undefined) problems.push(`${rel}: og:image but no twitter:image`);
+  else if (ogImage !== undefined && twitterImage !== ogImage)
+    problems.push(`${rel}: twitter:image="${twitterImage}" differs from og:image="${ogImage}"`);
   for (const [attr, ref] of found) {
     if (/^(https?:|mailto:|tel:|data:|#)/i.test(ref) || ref.startsWith("//")) continue;
     refs++;
